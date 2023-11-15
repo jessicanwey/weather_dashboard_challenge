@@ -19,15 +19,17 @@ var formSubmitHandler = function (event) {
         return;
     }
 
+    //add the city to the saved searches
     addToSavedSearches(cityName);
 }
 
+//this handles the search when a previously seaarched city button is clicked
 var buttonClickHandler = function (event){
     cityName = event.currentTarget.innerText;
     getCurrentWeatherInformation(cityName);
 }
 
-//once the request has been made, this funtion will get the information and build the HTML
+//once the request has been made, this function will get the information and build the HTML
 function getCurrentWeatherInformation(cityName){
     var apiUrl = 'http://api.openweathermap.org/data/2.5/weather?q=' + cityName + '&units=imperial&APPID=' + apiKey;
     var weatherInfo;
