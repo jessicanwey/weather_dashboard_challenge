@@ -2,6 +2,7 @@ var searchFormEl = document.querySelector('#search-form');
 var cityButtonsEl = document.querySelector('#city-buttons');
 var cityInputEl = document.querySelector('#city-search');
 var clearSearchButton = document.querySelector('#clear-history-button');
+var noResultsEl = document.querySelector('#no-results');
 var apiKey = '55e49e8735cbc3ae39cc6caf840ef04f';
 var cityName;
 var searchHistory;
@@ -12,19 +13,7 @@ var formSubmitHandler = function (event) {
    
     //must submit a city name
     if(cityName !== null && cityName !== ""){
-        //var apiUrl = 'https://api.openweathermap.org/data/2.5/forecast?q={' + cityName + '}&appid={' + apiKey + '}';
-
-        fetch('http://api.openweathermap.org/data/2.5/weather?q=London,uk&units=imperial&APPID=55e49e8735cbc3ae39cc6caf840ef04f')
-        .then(function (response) {
-            if (response.ok) {
-              response.json().then(function (data) {
-                getCurrentWeatherInformation(data);
-                console.log(data);
-              });
-            } else {
-              alert('Error: ' + response.statusText);
-            }
-          })
+        getCurrentWeatherInformation(cityName);
     } else {
         window.alert("You must enter a value for city");
         return;
@@ -34,11 +23,29 @@ var formSubmitHandler = function (event) {
 }
 
 var buttonClickHandler = function (event){
-    getCurrentWeatherInformation();
+    cityName = event.currentTarget.innerText;
+    getCurrentWeatherInformation(cityName);
 }
 
 //once the request has been made, this funtion will get the information and build the HTML
-function getCurrentWeatherInformation(weatherInfo){
+function getCurrentWeatherInformation(cityName){
+    var apiUrl = 'http://api.openweathermap.org/data/2.5/weather?q=' + cityName + '&units=imperial&APPID=' + apiKey;
+    var weatherInfo;
+
+    fetch(apiUrl)
+    .then(function (response) {
+        if (response.ok) {
+          response.json().then(function (data) {
+            populateWeatherInfo(data);
+            console.log(data);
+          });
+        } else {
+          alert('Error: ' + response.statusText);
+        }
+      })
+}
+
+function populateWeatherInfo(weatherInfo){
     var city = weatherInfo.name;
     var temp = weatherInfo.main.temp;
     var wind = weatherInfo.wind.speed;
@@ -64,7 +71,23 @@ function getCurrentWeatherInformation(weatherInfo){
     currentIconEl.textContent = icon;
     currentIconEl.setAttribute('src', 'https://openweathermap.org/img/wn/' + icon + '@2x.png');
     currentDateEl.textContent = currentDate;
-    
+
+   // getFiveDayForecast(currentLat, currentLong);
+}
+
+function getFiveDayForecast(lattitude, longitude){
+    //var apiUrl = 'https://api.openweathermap.org/data/3.0/onecall?lat=33.44&lon=-94.04&APPID=55e49e8735cbc3ae39cc6caf840ef04f';
+
+    fetch('https://api.openweathermap.org/data/3.0/onecall?lat=33.44&lon=-94.04&exclude=hourly,daily&units=imperial&APPID=55e49e8735cbc3ae39cc6caf840ef04f')
+    .then(function (response) {
+        if (response.ok) {
+          response.json().then(function (data) {
+            console.log(data);
+          });
+        } else {
+          alert('Error: ' + response.statusText);
+        }
+      })
 }
 
 //when the page loads, the previously searched cities will be populated on 
@@ -86,11 +109,12 @@ function getPreviousSearches(){
                 cityName = searchHistory[i];
                 cityButton.textContent = cityName.toUpperCase();
                 cityButton.className = 'mt-2 button w-full bg-sky-300 rounded';
+                cityButton.addEventListener('click', buttonClickHandler);
             }
         } else {
-            //cityButtonsEl.style.display = none;
+            cityButtonsEl.setAttribute('style', "display:none");
             var noSearchesEl = document.createElement("div");
-            cityButtonsEl.appendChild(noSearchesEl);
+            noResultsEl.appendChild(noSearchesEl);
             noSearchesEl.innerText = "No previous searches";
         }
         return;
@@ -127,5 +151,4 @@ function clearSearchHistory(){
 }
 
 searchFormEl.addEventListener('submit', formSubmitHandler);
-cityButtonsEl.addEventListener('click', buttonClickHandler);
 getPreviousSearches();
