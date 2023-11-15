@@ -4,6 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
+  <script 
+    src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js" 
+    integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U=" 
+    crossorigin="anonymous">
+  </script>
   <title>Weather Dashboard Challenge</title>
 </head>
 <body>
@@ -21,7 +26,12 @@
                 </form>
             </div>
             <div class="col-span-2 p-3 m-3 border-double border-2 border-sky-300">
-                <p>City data</p>
+                <h3 id="current-city"></h3>
+                <p id="current-date"></p>
+                <p id="current-icon"></p>
+                <p id="current-temp"></p>
+                <p id="current-wind"></p>
+                <p id="current-humidity"></p>
             </div>
             <div id="city-buttons" class="col-start-1 m-2 p-2">
                 <!--This is where the buttons for the saved searches will go-->

@@ -14,7 +14,7 @@ var formSubmitHandler = function (event) {
     if(cityName !== null && cityName !== ""){
         //var apiUrl = 'https://api.openweathermap.org/data/2.5/forecast?q={' + cityName + '}&appid={' + apiKey + '}';
 
-        fetch('http://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=55e49e8735cbc3ae39cc6caf840ef04f')
+        fetch('http://api.openweathermap.org/data/2.5/weather?q=London,uk&units=imperial&APPID=55e49e8735cbc3ae39cc6caf840ef04f')
         .then(function (response) {
             if (response.ok) {
               response.json().then(function (data) {
@@ -45,8 +45,26 @@ function getCurrentWeatherInformation(weatherInfo){
     var humidity = weatherInfo.main.humidity;
     var weatherArray = weatherInfo.weather;
     var icon = weatherArray[0].icon;
+    var currentCityEl = document.querySelector('#current-city');
+    var currentTempEl = document.querySelector('#current-temp');
+    var currentHumidityEl = document.querySelector('#current-humidity');
+    var currentWindEl = document.querySelector('#current-wind');
+    var currentIconEl = document.querySelector('#current-icon');
+    var currentDateEl = document.querySelector('#current-date');
+    var currentDate = dayjs().format('MM/DD/YYYY');
+    var currentLat = weatherInfo.coord.lat;
+    var currentLong = weatherInfo.coord.lon;
 
-    console.log(city + " " + temp + " " + wind + " " + humidity + " " + icon);
+    console.log(city + " " + temp + " " + wind + " " + humidity + " " + currentDate + " " + currentLat + " " + currentLong);
+
+    currentCityEl.textContent = city;
+    currentTempEl.textContent = 'Temp: ' + temp + ' °F';
+    currentHumidityEl.textContent = 'Humidity: ' + humidity + ' %';
+    currentWindEl.textContent = 'Wind: ' + wind + ' MPH';
+    currentIconEl.textContent = icon;
+    currentIconEl.setAttribute('src', 'https://openweathermap.org/img/wn/' + icon + '@2x.png');
+    currentDateEl.textContent = currentDate;
+    
 }
 
 //when the page loads, the previously searched cities will be populated on 
