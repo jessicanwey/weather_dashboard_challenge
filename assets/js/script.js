@@ -12,18 +12,19 @@ var formSubmitHandler = function (event) {
    
     //must submit a city name
     if(cityName !== null && cityName !== ""){
-        var apiUrl = 'https://api.openweathermap.org/data/2.5/forecast?q={' + cityName + '}&appid={' + apiKey + '}';
+        //var apiUrl = 'https://api.openweathermap.org/data/2.5/forecast?q={' + cityName + '}&appid={' + apiKey + '}';
 
-        fetch(apiUrl)
-            .then(function(response){
-                if(response.ok){
-                response.json.then(function(data){
-                    console.log(data.wind.speed);
-                })
-                } else {
-                    alert('Error: ' + response.statusText);
-                }
-            });
+        fetch('http://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=55e49e8735cbc3ae39cc6caf840ef04f')
+        .then(function (response) {
+            if (response.ok) {
+              response.json().then(function (data) {
+                getCurrentWeatherInformation(data);
+                console.log(data);
+              });
+            } else {
+              alert('Error: ' + response.statusText);
+            }
+          })
     } else {
         window.alert("You must enter a value for city");
         return;
@@ -37,8 +38,15 @@ var buttonClickHandler = function (event){
 }
 
 //once the request has been made, this funtion will get the information and build the HTML
-function getCurrentWeatherInformation(cityName){
+function getCurrentWeatherInformation(weatherInfo){
+    var city = weatherInfo.name;
+    var temp = weatherInfo.main.temp;
+    var wind = weatherInfo.wind.speed;
+    var humidity = weatherInfo.main.humidity;
+    var weatherArray = weatherInfo.weather;
+    var icon = weatherArray[0].icon;
 
+    console.log(city + " " + temp + " " + wind + " " + humidity + " " + icon);
 }
 
 //when the page loads, the previously searched cities will be populated on 
@@ -62,6 +70,7 @@ function getPreviousSearches(){
                 cityButton.className = 'mt-2 button w-full bg-sky-300 rounded';
             }
         } else {
+            //cityButtonsEl.style.display = none;
             var noSearchesEl = document.createElement("div");
             cityButtonsEl.appendChild(noSearchesEl);
             noSearchesEl.innerText = "No previous searches";
