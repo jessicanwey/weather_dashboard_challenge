@@ -29,10 +29,9 @@ var buttonClickHandler = function (event){
     getCurrentWeatherInformation(cityName);
 }
 
-//once the request has been made, this function will get the information and build the HTML
+//once the request has been made, this function will get the information and send to the function that populates the HTML
 function getCurrentWeatherInformation(cityName){
     var apiUrl = 'http://api.openweathermap.org/data/2.5/weather?q=' + cityName + '&units=imperial&APPID=' + apiKey;
-    var weatherInfo;
 
     fetch(apiUrl)
     .then(function (response) {
@@ -47,6 +46,8 @@ function getCurrentWeatherInformation(cityName){
       })
 }
 
+//this function populates the HTML for the current city and day then sends the longitude and latitude to the function that
+//does the API call that gets the five day forecast information
 function populateWeatherInfo(weatherInfo){
     var city = weatherInfo.name;
     var temp = weatherInfo.main.temp;
@@ -54,33 +55,32 @@ function populateWeatherInfo(weatherInfo){
     var humidity = weatherInfo.main.humidity;
     var weatherArray = weatherInfo.weather;
     var icon = weatherArray[0].icon;
-    var currentCityEl = document.querySelector('#current-city');
+    var currentCityEl = document.querySelector('#current-city-header');
     var currentTempEl = document.querySelector('#current-temp');
     var currentHumidityEl = document.querySelector('#current-humidity');
     var currentWindEl = document.querySelector('#current-wind');
     var currentIconEl = document.querySelector('#current-icon');
-    var currentDateEl = document.querySelector('#current-date');
     var currentDate = dayjs().format('MM/DD/YYYY');
     var currentLat = weatherInfo.coord.lat;
     var currentLong = weatherInfo.coord.lon;
 
     console.log(city + " " + temp + " " + wind + " " + humidity + " " + currentDate + " " + currentLat + " " + currentLong);
 
-    currentCityEl.textContent = city;
+    currentCityEl.textContent = city + " " + currentDate;
     currentTempEl.textContent = 'Temp: ' + temp + ' °F';
     currentHumidityEl.textContent = 'Humidity: ' + humidity + ' %';
     currentWindEl.textContent = 'Wind: ' + wind + ' MPH';
-    currentIconEl.textContent = icon;
     currentIconEl.setAttribute('src', 'https://openweathermap.org/img/wn/' + icon + '@2x.png');
-    currentDateEl.textContent = currentDate;
 
-   // getFiveDayForecast(currentLat, currentLong);
+   getFiveDayForecast(currentLat, currentLong);
 }
 
-function getFiveDayForecast(lattitude, longitude){
-    //var apiUrl = 'https://api.openweathermap.org/data/3.0/onecall?lat=33.44&lon=-94.04&APPID=55e49e8735cbc3ae39cc6caf840ef04f';
+//this function will call the API with the latitude and longitude to get the five day forecast information 
+//it will then create the HTML
+function getFiveDayForecast(latitude, longitude){
+    var apiUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat='+ latitude +'&lon=' + longitude +'&exclude=minutely,hourly&appid=' + apiKey;
 
-    fetch('https://api.openweathermap.org/data/3.0/onecall?lat=33.44&lon=-94.04&exclude=hourly,daily&units=imperial&APPID=55e49e8735cbc3ae39cc6caf840ef04f')
+    fetch(apiUrl)
     .then(function (response) {
         if (response.ok) {
           response.json().then(function (data) {
