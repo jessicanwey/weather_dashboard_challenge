@@ -131,19 +131,19 @@ function getFiveDayForecast(latitude, longitude) {
           var futureDayDivEl = document.createElement("div");
           var futureIconEl = document.createElement("img");
           fiveDayDivEl.appendChild(futureDayDivEl);
-          futureDayDivEl.className = "bg-sky-900 p-3 text-white";
+          futureDayDivEl.className = "bg-sky-500 p-3 text-white border-2 border-sky-300";
+          futureDayDivEl.setAttribute("style", "white-space: pre-wrap;");
           futureDayDivEl.textContent =
-            dayjs(futureDate).format("dddd - MMM D") +
-            "\n" + //figure out line break
+            dayjs(futureDate).format("ddd - MMM D") +
+            "\r\n" + //figure out line break
             futureTemp +
-            "°\nWind: " +
+            "°\r\nWind: " +
             futureWind +
-            " MPH" +
+            " MPH\r\n" +
             "Humidity: " +
             futureHumidity;
-          //add child here for each day / i
-          //then add a child to that for each of the days
-          futureDayDivEl.insertAdjacentElement("afterend", futureIconEl);
+          //futureDayDivEl.insertAdjacentElement("afterend", futureIconEl);
+          futureDayDivEl.appendChild(futureIconEl);
           futureIconEl.setAttribute(
             "src",
             "https://openweathermap.org/img/wn/" + futureIcon + "@2x.png"
@@ -187,7 +187,7 @@ function getPreviousSearches() {
     noSearchesEl.innerText = "No previous searches";
   }
   //eitherway hide the div for the five day
-  fiveDayEl.className = "columns-5 gap-3 invisible";
+  //fiveDayEl.className = "columns-5 gap-3 invisible";
   return;
 }
 
