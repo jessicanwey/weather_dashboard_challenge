@@ -63,7 +63,9 @@ function populateWeatherInfo(weatherInfo) {
   var currentHumidityEl = document.querySelector("#current-humidity");
   var currentWindEl = document.querySelector("#current-wind");
   var currentIconEl = document.querySelector("#current-icon");
+  var currentWeekdayEl = document.querySelector("#current-weekday");
   var currentDate = dayjs().format("MM/DD/YYYY");
+  var currentWeekday = dayjs().format("dddd");
   var currentLat = weatherInfo.coord.lat;
   var currentLong = weatherInfo.coord.lon;
 
@@ -77,7 +79,8 @@ function populateWeatherInfo(weatherInfo) {
     "src",
     "https://openweathermap.org/img/wn/" + icon + "@2x.png"
   );
-
+  currentWeekdayEl.textContent = currentWeekday;
+  currentWeekdayEl.className = "text-2xl";
   getFiveDayForecast(currentLat, currentLong);
 }
 
@@ -120,6 +123,30 @@ function getFiveDayForecast(latitude, longitude) {
               futureIcon +
               " " +
               futureHumidity
+          );
+
+          //this is where the HTML needs to be populated
+          //do the add child thing instead of what you have going on
+          var fiveDayDivEl = document.querySelector("#five-day-div");
+          var futureDayDivEl = document.createElement("div");
+          var futureIconEl = document.createElement("img");
+          fiveDayDivEl.appendChild(futureDayDivEl);
+          futureDayDivEl.className = "bg-sky-900 p-3 text-white";
+          futureDayDivEl.textContent =
+            dayjs(futureDate).format("dddd - MMM D") +
+            "\n" + //figure out line break
+            futureTemp +
+            "°\nWind: " +
+            futureWind +
+            " MPH" +
+            "Humidity: " +
+            futureHumidity;
+          //add child here for each day / i
+          //then add a child to that for each of the days
+          futureDayDivEl.insertAdjacentElement("afterend", futureIconEl);
+          futureIconEl.setAttribute(
+            "src",
+            "https://openweathermap.org/img/wn/" + futureIcon + "@2x.png"
           );
         }
       });
