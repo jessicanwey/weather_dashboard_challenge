@@ -3,6 +3,7 @@ var cityButtonsEl = document.querySelector('#city-buttons');
 var cityInputEl = document.querySelector('#city-search');
 var clearSearchButton = document.querySelector('#clear-history-button');
 var noResultsEl = document.querySelector('#no-results');
+var fiveDayEl = document.querySelector('#five-day-div');
 var apiKey = '55e49e8735cbc3ae39cc6caf840ef04f';
 var cityName;
 var searchHistory;
@@ -78,7 +79,7 @@ function populateWeatherInfo(weatherInfo){
 //this function will call the API with the latitude and longitude to get the five day forecast information 
 //it will then create the HTML
 function getFiveDayForecast(latitude, longitude){
-    var apiUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat='+ latitude +'&lon=' + longitude +'&exclude=minutely,hourly&appid=' + apiKey;
+    var apiUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat='+ latitude +'&lon=' + longitude +'&exclude=minutely,hourly,alerts&units=imperial&appid=' + apiKey;
 
     fetch(apiUrl)
     .then(function (response) {
@@ -90,6 +91,9 @@ function getFiveDayForecast(latitude, longitude){
           alert('Error: ' + response.statusText);
         }
       })
+
+      fiveDayEl.setAttribute("visibility", "visible");
+
 }
 
 //when the page loads, the previously searched cities will be populated on 
