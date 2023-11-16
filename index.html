@@ -1,83 +1,94 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script 
-    src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js" 
-    integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U=" 
-    crossorigin="anonymous">
-  </script>
-  <title>Weather Dashboard Challenge</title>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"
+      integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U="
+      crossorigin="anonymous"
+    ></script>
+    <title>Weather Dashboard Challenge</title>
+  </head>
+  <body>
     <header>
-        <h1 class="text-3xl text-right p-7 bg-sky-300 text-white">🌤️ WEATHER DASHBOARD 🌤️</h1>
+      <h1 class="text-3xl text-right p-7 bg-sky-300 text-white">
+        🌤️ WEATHER DASHBOARD 🌤️
+      </h1>
     </header>
 
     <main>
-        <div class="container m-auto grid grid-cols-3">
-            <div class="col-start-1 p-3 m-3 border-double border-2 border-sky-300">
-                <h3 class="text-1xl m-2 text-center">SEARCH FOR A CITY:</h3>
-                <form id="search-form">
-                    <input name="city-search" id="city-search" type="text" autofocus="true" class="form-input w-full border-2 border-slate-300"/>
-                    <button type="submit" class="mt-2 button w-full bg-slate-300 rounded">Search</button>
-                </form>
-            </div>
-            <div class="col-span-2 p-3 m-3 border-double border-2 border-sky-300">
-                <div class="columns-2">
-                    <h3 id="current-city-header"></h3>
-                    <p id="current-temp"></p>
-                    <p id="current-wind"></p>
-                    <p id="current-humidity"></p>
-                    <img id="current-icon">
-                </div>
-            </div>
-            <div id="city-buttons" class="col-start-1 row-start-2 m-2 p-2">
-                <!--This is where the buttons for the saved searches will go-->
-            </div>
-            <div id="no-results" class="col-start-1 m-2 p-2"></div>
-            <div class="col-span-2 col-start-2 row-start-2 m-4">
-                <div id="five-day-div" class="columns-5 gap-3">
-                    <div id="day-1" class="bg-sky-900 p-3 text-white">
-                        <p id="day-1-date"></p>
-                        <img id="day-1-icon">
-                        <p id="day-1-temp"></p>
-                        <p id="day-1-wind"></p>
-                        <p id="day-1-humidity"></p>
-                    </div>
-                    <div id="day-2" class="bg-sky-900 p-3 text-white">
-                        <p id="day-2-date"></p>
-                        <img id="day-2-icon">
-                        <p id="day-2-temp"></p>
-                        <p id="day-2-wind"></p>
-                    </div>
-                    <div id="day-3" class="bg-sky-900 p-3 text-white">
-                        <p id="day-3-date"></p>
-                        <img id="day-3-icon">
-                        <p id="day-3-temp"></p>
-                        <p id="day-3-wind"></p>
-                    </div>
-                    <div id="day-4" class="bg-sky-900 p-3 text-white">
-                        <p id="day-4-date"></p>
-                        <img id="day-4-icon">
-                        <p id="day-4-temp"></p>
-                        <p id="day-4-wind"></p>
-                    </div>
-                    <div id="day-5" class="bg-sky-900 p-3 text-white">
-                        <p id="day-5-date"></p>
-                        <img id="day-5-icon">
-                        <p id="day-5-temp"></p>
-                        <p id="day-5-wind"></p>
-                    </div>
-                </div>
-            </div>
+      <div class="container m-auto grid grid-cols-3">
+        <div class="col-start-1 p-3 m-3 border-double border-2 border-sky-300">
+          <h3 class="text-1xl m-2 text-center">SEARCH FOR A CITY:</h3>
+          <form id="search-form">
+            <input
+              name="city-search"
+              id="city-search"
+              type="text"
+              autofocus="true"
+              class="form-input w-full border-2 border-slate-300"
+            />
+            <button
+              type="submit"
+              class="mt-2 button w-full bg-slate-300 rounded"
+            >
+              Search
+            </button>
+          </form>
         </div>
+        <div class="col-span-2 p-3 m-3 border-double border-2 border-sky-300">
+          <div class="columns-2">
+            <h3 id="current-city-header"></h3>
+            <p id="current-temp"></p>
+            <p id="current-wind"></p>
+            <p id="current-humidity"></p>
+            <img id="current-icon" />
+          </div>
+        </div>
+        <div id="city-buttons" class="col-start-1 row-start-2 m-2 p-2">
+          <!--This is where the buttons for the saved searches will go-->
+        </div>
+        <div id="no-results" class="col-start-1 m-2 p-2"></div>
+        <div class="col-span-2 col-start-2 row-start-2 m-4">
+          <div id="five-day-div" class="columns-5 gap-3 invisible">
+            <div id="day-1" class="bg-sky-900 p-3 text-white">
+              <p id="day-1-date"></p>
+              <img id="day-1-icon" />
+              <p id="day-1-temp"></p>
+              <p id="day-1-wind"></p>
+              <p id="day-1-humidity"></p>
+            </div>
+            <div id="day-2" class="bg-sky-900 p-3 text-white">
+              <p id="day-2-date"></p>
+              <img id="day-2-icon" />
+              <p id="day-2-temp"></p>
+              <p id="day-2-wind"></p>
+            </div>
+            <div id="day-3" class="bg-sky-900 p-3 text-white">
+              <p id="day-3-date"></p>
+              <img id="day-3-icon" />
+              <p id="day-3-temp"></p>
+              <p id="day-3-wind"></p>
+            </div>
+            <div id="day-4" class="bg-sky-900 p-3 text-white">
+              <p id="day-4-date"></p>
+              <img id="day-4-icon" />
+              <p id="day-4-temp"></p>
+              <p id="day-4-wind"></p>
+            </div>
+            <div id="day-5" class="bg-sky-900 p-3 text-white">
+              <p id="day-5-date"></p>
+              <img id="day-5-icon" />
+              <p id="day-5-temp"></p>
+              <p id="day-5-wind"></p>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
+  </body>
 
-</body>
-
-<script src="./assets/js/script.js"></script>
-
+  <script src="./assets/js/script.js"></script>
 </html>

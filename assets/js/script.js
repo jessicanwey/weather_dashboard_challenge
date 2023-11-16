@@ -92,8 +92,7 @@ function getFiveDayForecast(latitude, longitude){
         }
       })
 
-      fiveDayEl.setAttribute("visibility", "visible");
-
+      fiveDayEl.className = 'columns-5 gap-3 visible';
 }
 
 //when the page loads, the previously searched cities will be populated on 
@@ -123,6 +122,8 @@ function getPreviousSearches(){
             noResultsEl.appendChild(noSearchesEl);
             noSearchesEl.innerText = "No previous searches";
         }
+        //eitherway hide the div for the five day
+        fiveDayEl.className = 'columns-5 gap-3 invisible';
         return;
 }
 
