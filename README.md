@@ -6,4 +6,6 @@ The user is also presented with the 5-day forcast with the date, an icon represe
 
 Cities that have been searched for previously, are saved in local storage and presented to the user in a list. When they click on the city, the current and future conditions will be displayed for that city.
 
+https://jessicanwey.github.io/weather_dashboard_challenge/
+
 ![weather-dashboard-screenshit](https://github.com/jessicanwey/weather_dashboard_challenge/assets/145372607/92a55d62-4fac-432b-b916-d84586dc737c)
