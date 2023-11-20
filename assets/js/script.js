@@ -17,11 +17,12 @@ var formSubmitHandler = function (event) {
     getCurrentWeatherInformation(cityName);
       //add the city to the saved searches
     addToSavedSearches(cityName);
+    cityInputEl.value = '';
   } else {
     window.alert("You must enter a value for city");
     return;
   }
-  
+
 };
 
 //this handles the search when a previously seaarched city button is clicked
@@ -97,6 +98,10 @@ function getFiveDayForecast(latitude, longitude) {
   var futureWind;
   var futureIcon;
   var futureHumidity;
+  var fiveDayDivEl = document.querySelector("#five-day-div");
+
+  //clear out the previous five day reults before populating new ones
+  fiveDayDivEl.innerHTML = '';
 
   fetch(apiUrl).then(function (response) {
     if (response.ok) {
@@ -111,7 +116,6 @@ function getFiveDayForecast(latitude, longitude) {
 
           //this is where the HTML needs to be populated
           //do the add child thing instead of what you have going on
-          var fiveDayDivEl = document.querySelector("#five-day-div");
           var futureDayDivEl = document.createElement("div");
           var futureIconEl = document.createElement("img");
           //var resultsDivEl = document.querySelector('#results-div');
@@ -151,6 +155,7 @@ function getPreviousSearches() {
 
   if (searchHistory !== null && searchHistory !== "") {
     var clearHistoryButton = document.createElement("button");
+    cityButtonsEl.innerHTML = '';
     cityButtonsEl.appendChild(clearHistoryButton);
     clearHistoryButton.textContent = "CLEAR SEARCH HISTORY";
     clearHistoryButton.className =
@@ -196,6 +201,7 @@ function addToSavedSearches(cityName) {
     searchHistory.push(currentCityName);
     localStorage.setItem("previousSearches", JSON.stringify(searchHistory));
   }
+  getPreviousSearches();
 }
 
 function clearSearchHistory() {
