@@ -15,13 +15,13 @@ var formSubmitHandler = function (event) {
   //must submit a city name
   if (cityName !== null && cityName !== "") {
     getCurrentWeatherInformation(cityName);
+      //add the city to the saved searches
+    addToSavedSearches(cityName);
   } else {
     window.alert("You must enter a value for city");
     return;
   }
-
-  //add the city to the saved searches
-  addToSavedSearches(cityName);
+  
 };
 
 //this handles the search when a previously seaarched city button is clicked
@@ -69,8 +69,6 @@ function populateWeatherInfo(weatherInfo) {
   var currentLat = weatherInfo.coord.lat;
   var currentLong = weatherInfo.coord.lon;
 
-  //console.log(city + " " + temp + " " + wind + " " + humidity + " " + currentDate + " " + currentLat + " " + currentLong);
-
   currentCityEl.textContent = city + " " + currentDate;
   currentTempEl.textContent = "Temp: " + temp + " °F";
   currentHumidityEl.textContent = "Humidity: " + humidity + " %";
@@ -103,33 +101,20 @@ function getFiveDayForecast(latitude, longitude) {
   fetch(apiUrl).then(function (response) {
     if (response.ok) {
       response.json().then(function (data) {
-        // console.log(data);
         var daysList = data.list;
-        // console.log(daysList);
-        for (var i = 0; daysList.length > 0; i++) {
+        for (var i = 0; daysList.length > 0; i+=8) {
           futureDate = data.list[i].dt_txt;
           futureWind = data.list[i].wind.speed;
           futureTemp = data.list[i].main.temp;
           futureIcon = data.list[i].weather[0].icon;
           futureHumidity = data.list[i].main.humidity;
-          console.log(data);
-          console.log(
-            futureDate +
-              " " +
-              futureWind +
-              " " +
-              futureTemp +
-              " " +
-              futureIcon +
-              " " +
-              futureHumidity
-          );
 
           //this is where the HTML needs to be populated
           //do the add child thing instead of what you have going on
           var fiveDayDivEl = document.querySelector("#five-day-div");
           var futureDayDivEl = document.createElement("div");
           var futureIconEl = document.createElement("img");
+          //var resultsDivEl = document.querySelector('#results-div');
           fiveDayDivEl.appendChild(futureDayDivEl);
           futureDayDivEl.className = "bg-sky-500 p-3 text-white border-2 border-sky-300";
           futureDayDivEl.setAttribute("style", "white-space: pre-wrap;");
@@ -186,8 +171,6 @@ function getPreviousSearches() {
     noResultsEl.appendChild(noSearchesEl);
     noSearchesEl.innerText = "No previous searches";
   }
-  //eitherway hide the div for the five day
-  //fiveDayEl.className = "columns-5 gap-3 invisible";
   return;
 }
 
