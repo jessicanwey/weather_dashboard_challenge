@@ -34,7 +34,7 @@ var buttonClickHandler = function (event) {
 //once the request has been made, this function will get the information and send to the function that populates the HTML
 function getCurrentWeatherInformation(cityName) {
   var apiUrl =
-    "http://api.openweathermap.org/data/2.5/weather?q=" +
+    "https://api.openweathermap.org/data/2.5/weather?q=" +
     cityName +
     "&units=imperial&APPID=" +
     apiKey;
